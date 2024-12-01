@@ -1,6 +1,7 @@
 import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 import java.util.Scanner;
 
 public class App {
@@ -39,6 +40,10 @@ public class App {
                         selecPlanet();
                     } else {
                         System.out.println("Ya has seleccionado un destino: " + planets[selectedPlanet]);
+                        // si tiene el planeta y una nave seleccionada le muestra los tiempos de llegada
+                        if (haveShip == true) {
+                            calculateTime();
+                        }
                     }
                     if (haveShip == false && havePlanet == true) {
                         selectShip();
@@ -46,8 +51,17 @@ public class App {
                     break;
                 case 2:
                     selectShip();
+                    // despues de seleccionar la nave verifica que ya tenga seleccionado un planeta y le muestra
+                    // los tiempos del viaje
+                    if (havePlanet == true) {
+                        calculateTime();
+                    }
+                    break;
+                case 3:
+                    simulateTrip();
                     break;
                 default:
+                System.out.println("Opción invalida, intentalo nuevamente!!!");
                     break;
             }
         } while (option != 4);
@@ -58,7 +72,7 @@ public class App {
         System.out.println("""
 
                 |        ===================             |
-                |--------| Menú de la nave |-------------|
+                |--------| Menú principal  |-------------|
                 |        ===================             |
                 |1. Seleccionar un planeta como destino. |
                 |2. Gestionar la nave espacial.          |
@@ -162,12 +176,85 @@ public class App {
         if (selectedPlanet >= 0 && selectedPlanet < planets.length) {
             System.out.println(selectedPlanet);
             System.out.println("Has seleccionado el planeta: " + planets[selectedPlanet]);
+            // luego de seleccionar el planeta llama a la funcion para mostrar su información
             showInfo();
             havePlanet = true;
         } else {
             System.err.println("Opcion invalida, intentalo nuevamente!");
         }
     }
+
+    public static void simulateTrip() {
+        if (havePlanet == true && haveShip == true) {
+            calculateTime();
+            if (manageOxy == true && manageFuel == true) {
+                System.out.println("""
+                                ====================
+                                Simulación Del Viaje
+                                ====================
+                        """);
+                System.out.println("¿Desea simular el viaje? s/n");
+                char option = scanner.next().charAt(0);
+                // transforma el character option en mayuscula
+                if (Character.toUpperCase(option) == 'S') {
+                    System.out.println("----- Iniciando Viaje ----");
+                    Random random = new Random();
+                    for (int progreso = 0; progreso <= 100; progreso += 10) {
+                        if (progreso == 30) {
+                            // muestra la barra de progeso
+                            progressBarSimu(10000);
+                        }
+
+                        if (random.nextInt(10) < 3) {
+                            System.out.println("Terminando ajustes...");
+                            if (random.nextInt(10)> 6) {
+                            }
+                        }
+
+                        try {
+                            Thread.sleep(1000);
+                        } catch (InterruptedException e) {
+                            System.out.println("Error en la simulación");
+                        }
+                    }
+                    // resetear variables booleanas para poder realizar otro viaje
+                    havePlanet = false;
+                    haveShip = false;
+                    havepass = false;
+                    manageFuel = false;
+                    manageOxy = false;
+
+                } else {
+                    System.out.println("CANCELANDO PROCEDIMIENTO...");
+                    progressBar(500);
+                }
+
+            } else {
+                if (manageOxy == false || manageFuel == false) {
+                    if (manageOxy == false) {
+                        System.out.println(
+                        "Los Niveles de oxígeno estan por debajo de los indicadores, por favor reviselos");
+                    }
+                    if (manageFuel == false) {
+                        System.out.println(
+                            "Los Niveles de combustible estan por debajo de los indicadores, por favor reviselos");
+                    }
+                }
+            }
+
+    }else {
+        if (manageOxy == false || manageFuel == false) {
+            if (manageOxy == false) {
+                System.out.println(
+                "Los Niveles de oxígeno estan por debajo de los indicadores, por favor reviselos");
+            }
+            if (manageFuel == false) {
+                System.out.println(
+                    "Los Niveles de combustible estan por debajo de los indicadores, por favor reviselos");
+            }
+        }
+}
+}
 
 
     // Metodos auxiliares
@@ -333,6 +420,22 @@ public class App {
         }
     }
 
+    public static void progressBarSimu(int steps) {
+        int totalSteps = steps;
+
+        for (int i = 0; i <= totalSteps; i++) {
+            double progress = (double) i / totalSteps;
+            printProgressBar(progress);
+            // Cuando llegue al 100%, sigue con el código
+            if (i == 7000) {
+                System.out.println("\nCasi Llegamos");
+            }
+            if (i == totalSteps) {
+                System.out.println("\n¡Llegada exitosa al destino...");
+            }
+        }
+    }
+
     private static void printProgressBar(double progress) {
         int width = 50; // Ancho de la barra de progreso
         int completed = (int) (width * progress);
@@ -346,4 +449,6 @@ public class App {
         }
         System.out.print("] " + (int) (progress * 100) + "%");
     }
+
+
 }
