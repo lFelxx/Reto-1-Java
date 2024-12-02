@@ -155,15 +155,18 @@ public class App {
                     break;
                 case 3:
                 // verifica que ya se tenga un planeta seleccionado para poder gestionar el combustible
-                    if (havePlanet == true) {
+                if (havePlanet == true) {
+                    if (haveShip == true) {
                         showfuel();
+                    // si no ha seleccionado una nave.
                     } else {
-                        System.out.println("Aún no has seleccionado un planeta!");
+                        System.out.println("Primero debes seleccionar una nave para gestionar el combustible!");
                     }
-                    break;
-                default:
-                System.out.println("Opcion invalida, intentalo nuevamente!");
-                    break;
+                // si no ha seleccionado un planeta
+                } else {
+                    System.out.println("Aún no has seleccionado un planeta!");
+                }
+                break;
             }
         } while (option != 4);
     }
@@ -174,7 +177,6 @@ public class App {
         System.out.println("Porfavor escoge el planeta al que deseas ir");
         selectedPlanet = scanner.nextInt() - 1;
         if (selectedPlanet >= 0 && selectedPlanet < planets.length) {
-            System.out.println(selectedPlanet);
             System.out.println("Has seleccionado el planeta: " + planets[selectedPlanet]);
             // luego de seleccionar el planeta llama a la funcion para mostrar su información
             showInfo();
@@ -207,8 +209,6 @@ public class App {
 
                         if (random.nextInt(10) < 3) {
                             System.out.println("Terminando ajustes...");
-                            if (random.nextInt(10)> 6) {
-                            }
                         }
 
                         try {
