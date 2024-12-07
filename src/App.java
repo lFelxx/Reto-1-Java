@@ -6,6 +6,9 @@ import java.util.Scanner;
 
 public class App {
     static Scanner scanner = new Scanner(System.in);
+    // Integrantes del equipo
+    //-Felix Castro
+    //-Balmer Arteaga
     // listas estaticas de los planetas
     static String[] planets = { "Mercurio", "Venus", "Marte", "Jupiter", "Saturno", "Urano", "Neptuno" };
     static Double[] distance = { 91691000.0, 41400000.0, 78340000.0, 628730000.0, 1275000000.0, 2723950000.0,
